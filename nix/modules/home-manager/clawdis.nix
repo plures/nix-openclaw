@@ -130,7 +130,7 @@ in {
       }
     ];
 
-    home.packages = [ cfg.package pkgs.clawdis-doctor pkgs.clawdis-setup ];
+    home.packages = [ cfg.package ];
 
     home.file.".clawdis/clawdis.json".text = configJson;
 

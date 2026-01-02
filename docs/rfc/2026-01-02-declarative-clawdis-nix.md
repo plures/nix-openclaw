@@ -43,7 +43,7 @@ Non-goals:
 - A Nix package derivation for Clawdis.
 - A Home Manager module for user-level config and service wiring.
 - A nix-darwin module for macOS users (optional, thin wrapper over HM).
-- A flake with devShell + example configs + minimal CLI apps.
+- A flake with devShell + example configs.
 - Documentation and examples optimized for new users and agents.
 
 ## 4) Components and responsibilities
@@ -51,10 +51,8 @@ Non-goals:
 - **Package derivation**: builds Clawdis from a pinned source (tag or rev) and exposes a binary.
 - **Home Manager module**: declarative config, writes `~/.clawdis/clawdis.json`, manages services.
 - **Flake outputs**:
-  - `packages.<system>.clawdis` (binary)
-  - `apps.<system>.clawdis` (CLI)
-  - `apps.<system>.clawdis-setup` (guided setup -> emits Nix snippet)
-  - `apps.<system>.clawdis-doctor` (health + config validation)
+  - `packages.<system>.clawdis-gateway` (binary)
+  - `apps.<system>.clawdis` (gateway CLI)
   - `devShells.<system>.default` (docs + lint + tests)
   - `homeManagerModules.clawdis`
   - `darwinModules.clawdis` (if needed)
@@ -84,7 +82,7 @@ Defaults:
 
 - **Safe defaults vs. zero-friction**: default-off providers reduce risk but require explicit config. We accept the extra step for safety and clarity.
 - **Home Manager first**: HM is the clearest UX for user config, but NixOS-only users must adopt HM or a thin wrapper module.
-- **Guided setup wizard**: adds maintenance overhead, but it is the fastest path for non-Nix users.
+- **Agent copypasta**: single prompt is the fastest path for non-Nix users.
 
 ## 5) Inputs / workflow profiles
 
@@ -186,17 +184,8 @@ Users interact via:
 Agent-friendly flow:
 - Docs include a “copy-paste config” section with clear placeholders.
 - A guided troubleshooting checklist with exact commands and expected output.
-- `nix run nix-clawdis#clawdis-setup` produces a minimal Nix snippet from a short prompt flow.
 
-### 9.1) Guided setup UX contract (clawdis-setup)
-
-The wizard must:
-- Ask only for provider selection, tokens/file paths, and allowlist IDs.
-- Output a complete Nix snippet ready to paste into a flake or HM config.
-- Never print secrets to stdout unless explicitly confirmed.
-- End with a one-line “next command to run” (build + health check).
-
-### 9.2) Zero to Clawdis (no-Nix user path)
+### 9.1) Zero to Clawdis (no-Nix user path)
 
 The public docs must include a step-by-step “Zero to Clawdis” guide that covers:
 1) Install Determinate Nix on macOS (copy/paste command + link).
@@ -206,7 +195,7 @@ The public docs must include a step-by-step “Zero to Clawdis” guide that cov
 5) Paste minimal config snippet (Telegram or WhatsApp).
 6) Run build and verify with `clawdis status` / `clawdis health`.
 
-### 9.3) Agent copypasta (Codex/Claude)
+### 9.2) Agent copypasta (Codex/Claude)
 
 Provide a single prompt users can paste into a coding agent that results in:
 - Determinate Nix installed (if missing).
@@ -276,14 +265,14 @@ Docs structure (public-facing):
 1) Create `nix-clawdis` repo structure and flake.
 2) Implement package derivation (pin Clawdis source).
 3) Implement HM module with schema validation and config generation.
-4) Add CLI apps (`clawdis`, `clawdis status`, `clawdis health`).
+4) Document CLI usage (`clawdis` gateway).
 5) Add examples + docs (README + quickstarts + troubleshooting).
 6) Add CI for build + formatting + docs checks.
 
 ## 17) Brutal self-review (required)
 
 Findings (by persona):
-- Junior engineer: Needed a concrete “wizard contract” and copy‑paste snippet. Added 9.1 + example config.
+- Junior engineer: Needed a concrete agent copypasta and example config. Added 9.1.
 - Mid-level engineer: Lacked explicit module option schema and defaults. Added 4.1 + defaults.
 - Senior/principal engineer: Missing tradeoff framing and rollback plan. Added 4.2 + 15.1.
 - PM: Success criteria needed to be explicit. Added 10‑minute onboarding goal in section 2.
@@ -303,7 +292,7 @@ Second pass review (delta):
 ## 18) Implementation status (current)
 
 Implemented in `nix-clawdis` repo:
-- Flake outputs: package + apps + devShell + HM module + darwin wrapper
+- Flake outputs: package + app + devShell + HM module + darwin wrapper
 - Clawdis gateway package pinned to `d4ee40db53a1d00b448a1153f2be58007213110f`
 - Telegram-first HM module (launchd on macOS)
 - README + Zero-to-Clawdis + Agent Copypasta + Quickstart/Config/Troubleshooting docs

@@ -20,15 +20,11 @@
       {
         packages = {
           clawdis-gateway = pkgs.clawdis-gateway;
-          clawdis-setup = pkgs.clawdis-setup;
-          clawdis-doctor = pkgs.clawdis-doctor;
           default = pkgs.clawdis-gateway;
         };
 
         apps = {
           clawdis = flake-utils.lib.mkApp { drv = pkgs.clawdis-gateway; };
-          clawdis-setup = flake-utils.lib.mkApp { drv = pkgs.clawdis-setup; };
-          clawdis-doctor = flake-utils.lib.mkApp { drv = pkgs.clawdis-doctor; };
         };
 
         devShells.default = pkgs.mkShell {

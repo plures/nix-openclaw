@@ -1,11 +1,5 @@
 # Troubleshooting
 
-## Check config exists
-
-```bash
-clawdis-doctor
-```
-
 ## Check launchd status (macOS)
 
 ```bash

@@ -47,7 +47,6 @@ clawdis health
 
 - macOS-only (nix-darwin + Home Manager)
 - Telegram-first docs + defaults
-- Guided setup app (`nix run nix-clawdis#clawdis-setup`)
 - Troubleshooting checklist + health checks
 
 ## Not included (v1)
