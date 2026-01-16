@@ -1157,6 +1157,12 @@ in
           channelInfo = lib.mkOption {
             type = t.bool;
           };
+          channels = lib.mkOption {
+            type = t.bool;
+          };
+          emojiUploads = lib.mkOption {
+            type = t.bool;
+          };
           events = lib.mkOption {
             type = t.bool;
           };
@@ -1188,6 +1194,9 @@ in
             type = t.bool;
           };
           search = lib.mkOption {
+            type = t.bool;
+          };
+          stickerUploads = lib.mkOption {
             type = t.bool;
           };
           stickers = lib.mkOption {
@@ -1353,6 +1362,12 @@ in
         channelInfo = lib.mkOption {
           type = t.bool;
         };
+        channels = lib.mkOption {
+          type = t.bool;
+        };
+        emojiUploads = lib.mkOption {
+          type = t.bool;
+        };
         events = lib.mkOption {
           type = t.bool;
         };
@@ -1384,6 +1399,9 @@ in
           type = t.bool;
         };
         search = lib.mkOption {
+          type = t.bool;
+        };
+        stickerUploads = lib.mkOption {
           type = t.bool;
         };
         stickers = lib.mkOption {
