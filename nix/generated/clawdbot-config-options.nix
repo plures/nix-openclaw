@@ -263,6 +263,13 @@ in
         enabled = lib.mkOption {
           type = t.bool;
         };
+        experimental = lib.mkOption {
+          type = t.submodule { options = {
+          sessionMemory = lib.mkOption {
+            type = t.bool;
+          };
+        }; };
+        };
         fallback = lib.mkOption {
           type = t.oneOf [ t.enum [ "openai" ] t.enum [ "none" ] ];
         };
@@ -304,6 +311,9 @@ in
             type = t.attrsOf (t.str);
           };
         }; };
+        };
+        sources = lib.mkOption {
+          type = t.listOf (t.oneOf [ t.enum [ "memory" ] t.enum [ "sessions" ] ]);
         };
         store = lib.mkOption {
           type = t.submodule { options = {
@@ -651,6 +661,13 @@ in
         enabled = lib.mkOption {
           type = t.bool;
         };
+        experimental = lib.mkOption {
+          type = t.submodule { options = {
+          sessionMemory = lib.mkOption {
+            type = t.bool;
+          };
+        }; };
+        };
         fallback = lib.mkOption {
           type = t.oneOf [ t.enum [ "openai" ] t.enum [ "none" ] ];
         };
@@ -692,6 +709,9 @@ in
             type = t.attrsOf (t.str);
           };
         }; };
+        };
+        sources = lib.mkOption {
+          type = t.listOf (t.oneOf [ t.enum [ "memory" ] t.enum [ "sessions" ] ]);
         };
         store = lib.mkOption {
           type = t.submodule { options = {
