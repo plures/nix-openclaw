@@ -2,7 +2,7 @@
 {
   owner = "moltbot";
   repo = "moltbot";
-  rev = "4ac7aa4a481503508e8bd2c49d2e71e00fccfe36";
-  hash = "sha256-RmiVI0B/84smrgrb2zNOyfzymwIUewV7AaNKFBpO3Ko=";
+  rev = "c20035094ddf95d3186429e88c1b753b99edc36b";
+  hash = "sha256-58YRGbEqWUHfktzZrRL3wKRnJ1fAO0yT5ou29E/kSbQ=";
   pnpmDepsHash = "sha256-7627rdKZopr2oStPDYNhkKCKySx2rf9v5rcauJ4DhWw=";
 }
