@@ -220,14 +220,21 @@ const objectTypeForSchema = (schema: JsonSchema, indent: string): string => {
   return `t.submodule { options = {\n${inner}\n${indent}}; }`;
 };
 
-const renderOption = (key: string, schemaObj: JsonSchema, _required: boolean, indent: string): string => {
+const renderOption = (key: string, schemaObj: JsonSchema, required: boolean, indent: string): string => {
   const schema = deref(schemaObj, new Set());
   const description = typeof schema.description === "string" ? schema.description : null;
-  const typeExpr = typeForSchema(schema, indent);
+  const baseTypeExpr = typeForSchema(schema, indent);
+  const typeExpr =
+    !required && !baseTypeExpr.startsWith("t.nullOr")
+      ? `t.nullOr (${baseTypeExpr})`
+      : baseTypeExpr;
   const lines = [
     `${indent}${nixAttr(key)} = lib.mkOption {`,
     `${indent}  type = ${typeExpr};`,
   ];
+  if (!required) {
+    lines.push(`${indent}  default = null;`);
+  }
   if (description) {
     lines.push(`${indent}  description = ${stringify(description)};`);
   }

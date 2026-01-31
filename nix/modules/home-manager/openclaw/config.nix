@@ -44,6 +44,15 @@ let
     inherit config lib pkgs openclawLib enabledInstances plugins;
   };
 
+  stripNulls = value:
+    if value == null then null
+    else if builtins.isAttrs value then
+      lib.filterAttrs (_: v: v != null) (builtins.mapAttrs (_: stripNulls) value)
+    else if builtins.isList value then
+      builtins.filter (v: v != null) (map stripNulls value)
+    else
+      value;
+
   mkInstanceConfig = name: inst: let
     gatewayPackage =
       if inst.gatewayPath != null then
@@ -58,7 +67,7 @@ let
         inst.package;
     pluginPackages = plugins.pluginPackagesFor name;
     pluginEnvAll = plugins.pluginEnvAllFor name;
-    mergedConfig = lib.recursiveUpdate cfg.config inst.config;
+    mergedConfig = stripNulls (lib.recursiveUpdate cfg.config inst.config);
     configJson = builtins.toJSON mergedConfig;
     configFile = pkgs.writeText "openclaw-${name}.json" configJson;
     gatewayWrapper = pkgs.writeShellScriptBin "openclaw-gateway-${name}" ''
