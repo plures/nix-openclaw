@@ -1,0 +1,50 @@
+{ lib, pkgs, home-manager }:
+
+let
+  openclawModule = ../modules/home-manager/openclaw.nix;
+  testScript = builtins.readFile ../tests/hm-activation.py;
+
+in
+lib.nixosTest {
+  name = "openclaw-hm-activation";
+
+  nodes.machine = { ... }:
+    {
+      imports = [ home-manager.nixosModules.home-manager ];
+
+      networking.firewall.allowedTCPPorts = [ 18999 ];
+
+      users.users.alice = {
+        isNormalUser = true;
+        home = "/home/alice";
+        extraGroups = [ "wheel" ];
+      };
+
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.alice = { ... }:
+          {
+            imports = [ openclawModule ];
+
+            home = {
+              username = "alice";
+              homeDirectory = "/home/alice";
+              stateVersion = "23.11";
+            };
+
+            programs.openclaw = {
+              enable = true;
+              installApp = false;
+              launchd.enable = false;
+              instances.default = {
+                gatewayPort = 18999;
+                config = {};
+              };
+            };
+          };
+      };
+    };
+
+  testScript = testScript;
+}

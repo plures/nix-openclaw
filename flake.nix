@@ -55,6 +55,10 @@
           config-options = pkgs.callPackage ./nix/checks/openclaw-config-options.nix {
             sourceInfo = sourceInfoStable;
           };
+          hm-activation = import ./nix/checks/openclaw-hm-activation.nix {
+            inherit pkgs home-manager;
+            lib = pkgs.lib;
+          };
         } else {});
 
         devShells.default = pkgs.mkShell {
