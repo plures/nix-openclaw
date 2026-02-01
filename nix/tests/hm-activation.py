@@ -28,7 +28,7 @@ if not exec_match:
 
 gateway_wrapper = exec_match.group(1)
 openclaw_bin = machine.succeed(
-    f"sed -n 's/^exec \"\\([^\\\"]*\\/bin\\/openclaw\\)\".*/\\1/p' {gateway_wrapper} | head -n 1"
+    f"grep -o '/nix/store/[^\" ]*/bin/openclaw' {gateway_wrapper} | head -n 1"
 ).strip()
 if not openclaw_bin:
     raise Exception(f"failed to locate openclaw binary from wrapper: {gateway_wrapper}")
