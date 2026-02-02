@@ -25,21 +25,21 @@ try:
     machine.wait_for_open_port(18999)
 except Exception:
     machine.succeed(
-        f"su - alice -c '{user_env} systemctl --user status openclaw-gateway.service --no-pager -n 200 2>&1 > /tmp/openclaw/systemctl-status.txt' || true"
+        f"su - alice -c '{user_env} systemctl --user status openclaw-gateway.service --no-pager -n 200 > /tmp/openclaw/systemctl-status.txt 2>&1' || true"
     )
     machine.succeed(
-        "journalctl --user -u openclaw-gateway.service --no-pager -n 200 -o cat 2>&1 > /tmp/openclaw/journalctl.txt || true"
+        f"su - alice -c '{user_env} journalctl --user -u openclaw-gateway.service --no-pager -n 200 -o cat > /tmp/openclaw/journalctl.txt 2>&1' || true"
     )
     machine.succeed("coredumpctl info --no-pager | tail -n 200 >&2 || true")
     machine.succeed("ls -la /tmp/openclaw 1>&2 || true")
     machine.succeed("ls -la /tmp/openclaw/node-report* 1>&2 || true")
     machine.succeed(
-        f"su - alice -c '{user_env} systemctl --user show openclaw-gateway.service --no-pager -p Environment 2>&1 > /tmp/openclaw/systemctl-env.txt' || true"
+        f"su - alice -c '{user_env} systemctl --user show openclaw-gateway.service --no-pager -p Environment > /tmp/openclaw/systemctl-env.txt 2>&1' || true"
     )
     machine.succeed("sed -n '1,200p' /tmp/openclaw/systemctl-env.txt >&2 || true")
     machine.succeed("wc -c /tmp/openclaw/systemctl-env.txt >&2 || true")
     machine.succeed(
-        f"su - alice -c '{user_env} systemctl --user cat openclaw-gateway.service --no-pager 2>&1 > /tmp/openclaw/systemctl-unit.txt' || true"
+        f"su - alice -c '{user_env} systemctl --user cat openclaw-gateway.service --no-pager > /tmp/openclaw/systemctl-unit.txt 2>&1' || true"
     )
     machine.succeed("sed -n '1,200p' /tmp/openclaw/systemctl-unit.txt >&2 || true")
     machine.succeed("wc -c /tmp/openclaw/systemctl-unit.txt >&2 || true")
