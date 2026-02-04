@@ -61,6 +61,7 @@
           config-options = pkgs.callPackage ./nix/checks/openclaw-config-options.nix {
             sourceInfo = sourceInfoStable;
           };
+          default-instance = pkgs.callPackage ./nix/checks/openclaw-default-instance.nix {};
           hm-activation = import ./nix/checks/openclaw-hm-activation.nix {
             inherit pkgs home-manager;
           };
