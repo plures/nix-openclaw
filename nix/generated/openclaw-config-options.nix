@@ -1999,6 +1999,10 @@ in
           type = t.nullOr (t.str);
           default = null;
         };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         sendReadReceipts = lib.mkOption {
           type = t.nullOr (t.bool);
           default = null;
@@ -2215,6 +2219,10 @@ in
         default = null;
       };
       password = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
         type = t.nullOr (t.str);
         default = null;
       };
@@ -2481,6 +2489,10 @@ in
               type = t.nullOr (t.bool);
               default = null;
             };
+            includeThreadStarter = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
             requireMention = lib.mkOption {
               type = t.nullOr (t.bool);
               default = null;
@@ -2657,6 +2669,10 @@ in
         };
         replyToMode = lib.mkOption {
           type = t.nullOr (t.oneOf [ (t.enum [ "off" ]) (t.enum [ "first" ]) (t.enum [ "all" ]) ]);
+          default = null;
+        };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
           default = null;
         };
         retry = lib.mkOption {
@@ -2905,6 +2921,10 @@ in
             type = t.nullOr (t.bool);
             default = null;
           };
+          includeThreadStarter = lib.mkOption {
+            type = t.nullOr (t.bool);
+            default = null;
+          };
           requireMention = lib.mkOption {
             type = t.nullOr (t.bool);
             default = null;
@@ -3081,6 +3101,10 @@ in
       };
       replyToMode = lib.mkOption {
         type = t.nullOr (t.oneOf [ (t.enum [ "off" ]) (t.enum [ "first" ]) (t.enum [ "all" ]) ]);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
       retry = lib.mkOption {
@@ -3264,6 +3288,10 @@ in
           type = t.nullOr (t.bool);
           default = null;
         };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         serviceAccount = lib.mkOption {
           type = t.nullOr (t.oneOf [ (t.str) (t.attrsOf (t.anything)) ]);
           default = null;
@@ -3438,6 +3466,10 @@ in
       };
       requireMention = lib.mkOption {
         type = t.nullOr (t.bool);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
       serviceAccount = lib.mkOption {
@@ -3638,6 +3670,10 @@ in
           type = t.nullOr (t.str);
           default = null;
         };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         service = lib.mkOption {
           type = t.nullOr (t.oneOf [ (t.enum [ "imessage" ]) (t.enum [ "sms" ]) (t.enum [ "auto" ]) ]);
           default = null;
@@ -3816,6 +3852,10 @@ in
         type = t.nullOr (t.str);
         default = null;
       };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
       service = lib.mkOption {
         type = t.nullOr (t.oneOf [ (t.enum [ "imessage" ]) (t.enum [ "sms" ]) (t.enum [ "auto" ]) ]);
         default = null;
@@ -3947,6 +3987,10 @@ in
       };
       requireMention = lib.mkOption {
         type = t.nullOr (t.bool);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
       sharePointSiteId = lib.mkOption {
@@ -4240,6 +4284,10 @@ in
           type = t.nullOr (t.oneOf [ (t.enum [ "on-start" ]) (t.enum [ "manual" ]) ]);
           default = null;
         };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         sendReadReceipts = lib.mkOption {
           type = t.nullOr (t.bool);
           default = null;
@@ -4410,6 +4458,10 @@ in
       };
       receiveMode = lib.mkOption {
         type = t.nullOr (t.oneOf [ (t.enum [ "on-start" ]) (t.enum [ "manual" ]) ]);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
       sendReadReceipts = lib.mkOption {
@@ -4716,6 +4768,10 @@ in
         };
         requireMention = lib.mkOption {
           type = t.nullOr (t.bool);
+          default = null;
+        };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
           default = null;
         };
         signingSecret = lib.mkOption {
@@ -5060,6 +5116,10 @@ in
       };
       requireMention = lib.mkOption {
         type = t.nullOr (t.bool);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
       signingSecret = lib.mkOption {
@@ -5411,6 +5471,10 @@ in
           type = t.nullOr (t.oneOf [ (t.enum [ "off" ]) (t.enum [ "first" ]) (t.enum [ "all" ]) ]);
           default = null;
         };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         retry = lib.mkOption {
           type = t.nullOr (t.submodule { options = {
           attempts = lib.mkOption {
@@ -5751,6 +5815,10 @@ in
         type = t.nullOr (t.oneOf [ (t.enum [ "off" ]) (t.enum [ "first" ]) (t.enum [ "all" ]) ]);
         default = null;
       };
+      responsePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
       retry = lib.mkOption {
         type = t.nullOr (t.submodule { options = {
         attempts = lib.mkOption {
@@ -5983,6 +6051,10 @@ in
           type = t.nullOr (t.str);
           default = null;
         };
+        responsePrefix = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         selfChatMode = lib.mkOption {
           type = t.nullOr (t.bool);
           default = null;
@@ -6176,6 +6248,10 @@ in
         default = null;
       };
       messagePrefix = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
+      responsePrefix = lib.mkOption {
         type = t.nullOr (t.str);
         default = null;
       };
