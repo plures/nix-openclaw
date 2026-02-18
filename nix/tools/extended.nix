@@ -36,29 +36,23 @@ let
     "ripgrep"
   ];
 
+  pluginCatalog = import ../modules/home-manager/openclaw/plugin-catalog.nix;
+  bundledToolNames = lib.unique (map (plugin: plugin.tool) (builtins.attrValues pluginCatalog));
+
   extraNames = [
     "go"
     "uv"
     "openai-whisper"
     "spotify-player"
-    "gogcli"
-    "peekaboo"
-    "camsnap"
-    "bird"
-    "sag"
-    "summarize"
     "openhue-cli"
     "wacli"
-    "sonoscli"
     "ordercli"
     "blucli"
     "eightctl"
     "mcporter"
-    "oracle"
     "qmd"
     "nano-pdf"
-    "goplaces"
-  ];
+  ] ++ bundledToolNames;
   toolNamesBase = if toolNamesOverride != null then toolNamesOverride else baseNames ++ extraNames;
   toolNames = builtins.filter (name: !builtins.elem name excludeToolNames) toolNamesBase;
 

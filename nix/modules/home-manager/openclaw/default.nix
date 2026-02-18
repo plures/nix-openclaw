@@ -6,14 +6,8 @@
 }:
 {
   imports = [
-    (lib.mkRenamedOptionModule
-      [ "programs" "openclaw" "firstParty" ]
-      [ "programs" "openclaw" "bundledPlugins" ]
-    )
-    (lib.mkRenamedOptionModule
-      [ "programs" "openclaw" "plugins" ]
-      [ "programs" "openclaw" "customPlugins" ]
-    )
+    (lib.mkRemovedOptionModule [ "programs" "openclaw" "firstParty" ] "Use programs.openclaw.bundledPlugins.<name>.enable/config.")
+    (lib.mkRemovedOptionModule [ "programs" "openclaw" "plugins" ] "Use programs.openclaw.customPlugins.")
     ./options.nix
     ./config.nix
   ];

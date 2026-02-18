@@ -18,16 +18,9 @@
 }:
 
 let
-  linuxFirstParty = [
-    "summarize"
-    "gogcli"
-    "goplaces"
-    "camsnap"
-    "sonoscli"
-    "sag"
-    "oracle"
-  ];
-  enableFirstParty = name: stdenv.hostPlatform.isDarwin || lib.elem name linuxFirstParty;
+  pluginCatalog = import ../modules/home-manager/openclaw/plugin-catalog.nix;
+  linuxBundledPlugins = builtins.attrNames (lib.filterAttrs (_: plugin: plugin.linux or false) pluginCatalog);
+  enableBundledPlugin = name: stdenv.hostPlatform.isDarwin || lib.elem name linuxBundledPlugins;
 
   stubModule =
     { lib, ... }:
@@ -97,7 +90,7 @@ let
               systemd.enable = false;
               instances.default = { };
               bundledPlugins = lib.mapAttrs (name: _: {
-                enable = enableFirstParty name;
+                enable = enableBundledPlugin name;
               }) options.programs.openclaw.bundledPlugins;
             };
           };

@@ -82,7 +82,7 @@
         }
       );
       default = openclawLib.effectivePlugins;
-      description = "Plugins enabled for this instance (includes first-party toggles).";
+      description = "Plugins enabled for this instance (includes bundled plugin toggles).";
     };
 
     config = lib.mkOption {

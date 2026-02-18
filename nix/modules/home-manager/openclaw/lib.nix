@@ -22,6 +22,7 @@ let
       cfg.package;
   appPackage = if cfg.appPackage != null then cfg.appPackage else defaultPackage;
   generatedConfigOptions = import ../../../generated/openclaw-config-options.nix { lib = lib; };
+  pluginCatalog = import ./plugin-catalog.nix;
 
   bundledPluginSources =
     let
@@ -31,19 +32,7 @@ let
         tool:
         "github:openclaw/nix-steipete-tools?dir=tools/${tool}&rev=${stepieteRev}&narHash=${stepieteNarHash}";
     in
-    {
-      summarize = stepiete "summarize";
-      peekaboo = stepiete "peekaboo";
-      oracle = stepiete "oracle";
-      poltergeist = stepiete "poltergeist";
-      sag = stepiete "sag";
-      camsnap = stepiete "camsnap";
-      gogcli = stepiete "gogcli";
-      goplaces = stepiete "goplaces";
-      bird = stepiete "bird";
-      sonoscli = stepiete "sonoscli";
-      imsg = stepiete "imsg";
-    };
+    lib.mapAttrs (_name: plugin: plugin.source or (stepiete plugin.tool)) pluginCatalog;
 
   bundledPlugins = lib.filter (p: p != null) (
     lib.mapAttrsToList (

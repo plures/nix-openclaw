@@ -8,6 +8,7 @@
 let
   openclawLib = import ./lib.nix { inherit config lib pkgs; };
   instanceModule = import ./options-instance.nix { inherit lib openclawLib; };
+  pluginCatalog = import ./plugin-catalog.nix;
   mkSkillOption = lib.types.submodule {
     options = {
       name = lib.mkOption {
@@ -139,16 +140,13 @@ in
     };
 
     bundledPlugins =
-      let
-        mkPlugin =
-          {
-            name,
-            defaultEnable ? false,
-          }:
+      lib.mapAttrs
+        (
+          name: plugin:
           {
             enable = lib.mkOption {
               type = lib.types.bool;
-              default = defaultEnable;
+              default = plugin.defaultEnable or false;
               description = "Enable the ${name} plugin (bundled).";
             };
             config = lib.mkOption {
@@ -156,24 +154,9 @@ in
               default = { };
               description = "Bundled plugin configuration passed through to ${name} (env/settings).";
             };
-          };
-      in
-      {
-        summarize = mkPlugin { name = "summarize"; };
-        peekaboo = mkPlugin { name = "peekaboo"; };
-        oracle = mkPlugin { name = "oracle"; };
-        poltergeist = mkPlugin { name = "poltergeist"; };
-        sag = mkPlugin { name = "sag"; };
-        camsnap = mkPlugin { name = "camsnap"; };
-        gogcli = mkPlugin { name = "gogcli"; };
-        goplaces = mkPlugin {
-          name = "goplaces";
-          defaultEnable = true;
-        };
-        bird = mkPlugin { name = "bird"; };
-        sonoscli = mkPlugin { name = "sonoscli"; };
-        imsg = mkPlugin { name = "imsg"; };
-      };
+          }
+        )
+        pluginCatalog;
 
     launchd.enable = lib.mkOption {
       type = lib.types.bool;

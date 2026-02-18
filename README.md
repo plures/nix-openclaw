@@ -254,15 +254,15 @@ All state lives in `~/.openclaw/`. Logs at `/tmp/openclaw/openclaw-gateway.log`.
 
 Plugins extend what OpenClaw can do. Each plugin bundles tools and teaches the AI how to use them.
 
-### First-party plugins
+### Bundled plugins
 
-These ship with nix-openclaw. Toggle them in your config:
+These ship with nix-openclaw. Catalog source of truth: `nix/modules/home-manager/openclaw/plugin-catalog.nix`.
+Toggle them in your config:
 
 ```nix
 programs.openclaw.bundledPlugins = {
   summarize.enable = true;   # Summarize web pages, PDFs, videos
   peekaboo.enable = true;    # Take screenshots
-  oracle.enable = false;     # Web search
   poltergeist.enable = false; # Control your macOS UI
   sag.enable = false;        # Text-to-speech
   camsnap.enable = false;    # Camera snapshots
@@ -284,7 +284,6 @@ programs.openclaw.bundledPlugins.goplaces = {
 |--------|--------------|
 | `summarize` | Summarize URLs, PDFs, YouTube videos |
 | `peekaboo` | Screenshot your screen |
-| `oracle` | Search the web |
 | `poltergeist` | Click, type, control macOS UI |
 | `sag` | Text-to-speech |
 | `camsnap` | Take photos from connected cameras |
@@ -542,7 +541,6 @@ Uses `instances.default` to unlock per-group mention rules. If `instances` is se
       # Plugins (prod: pinned GitHub). Built-ins are via nix-steipete-tools.
       # MVP target: repo pointers resolve to tools + skills automatically.
       plugins = [
-        { source = "github:openclaw/nix-steipete-tools?dir=tools/oracle"; }
         { source = "github:openclaw/nix-steipete-tools?dir=tools/peekaboo"; }
         { source = "github:joshp123/xuezh"; }
         {
