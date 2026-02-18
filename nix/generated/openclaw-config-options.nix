@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 75e11fed5db0b0dd3c83644f63feab357ed35e37. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev b5f551d71698b96a6849f26cf280ab88bc24188c. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -411,6 +411,10 @@ in
           default = null;
         };
       }; });
+        default = null;
+      };
+      imageMaxDimensionPx = lib.mkOption {
+        type = t.nullOr (t.int);
         default = null;
       };
       imageModel = lib.mkOption {
@@ -5656,6 +5660,10 @@ in
         }; });
           default = null;
         };
+        streaming = lib.mkOption {
+          type = t.nullOr (t.bool);
+          default = null;
+        };
         textChunkLimit = lib.mkOption {
           type = t.nullOr (t.int);
           default = null;
@@ -6018,6 +6026,10 @@ in
           default = null;
         };
       }; });
+        default = null;
+      };
+      streaming = lib.mkOption {
+        type = t.nullOr (t.bool);
         default = null;
       };
       textChunkLimit = lib.mkOption {
