@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 48e6b4fca3cbe3d2c1760790a6b224041f6ffa85. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev ca71b5cc51b60706f3833ea16d9814204bf45016. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -7415,7 +7415,7 @@ in
         default = null;
       };
       mode = lib.mkOption {
-        type = t.nullOr (t.oneOf [ (t.enum [ "token" ]) (t.enum [ "password" ]) (t.enum [ "trusted-proxy" ]) ]);
+        type = t.nullOr (t.oneOf [ (t.enum [ "none" ]) (t.enum [ "token" ]) (t.enum [ "password" ]) (t.enum [ "trusted-proxy" ]) ]);
         default = null;
       };
       password = lib.mkOption {
