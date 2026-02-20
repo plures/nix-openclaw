@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev c378439246bb26683fc1c43d14a9e435643ea34f. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 3e1ed0032d650ca5cad7d6dbafc890a45ffbb9e2. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -3043,6 +3043,220 @@ in
         }; });
           default = null;
         };
+        voice = lib.mkOption {
+          type = t.nullOr (t.submodule { options = {
+          autoJoin = lib.mkOption {
+            type = t.nullOr (t.listOf (t.submodule { options = {
+            channelId = lib.mkOption {
+              type = t.str;
+            };
+            guildId = lib.mkOption {
+              type = t.str;
+            };
+          }; }));
+            default = null;
+          };
+          enabled = lib.mkOption {
+            type = t.nullOr (t.bool);
+            default = null;
+          };
+          tts = lib.mkOption {
+            type = t.nullOr (t.submodule { options = {
+            auto = lib.mkOption {
+              type = t.nullOr (t.enum [ "off" "always" "inbound" "tagged" ]);
+              default = null;
+            };
+            edge = lib.mkOption {
+              type = t.nullOr (t.submodule { options = {
+              enabled = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              lang = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              outputFormat = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              pitch = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              proxy = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              rate = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              saveSubtitles = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              timeoutMs = lib.mkOption {
+                type = t.nullOr (t.int);
+                default = null;
+              };
+              voice = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              volume = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+            }; });
+              default = null;
+            };
+            elevenlabs = lib.mkOption {
+              type = t.nullOr (t.submodule { options = {
+              apiKey = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              applyTextNormalization = lib.mkOption {
+                type = t.nullOr (t.enum [ "auto" "on" "off" ]);
+                default = null;
+              };
+              baseUrl = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              languageCode = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              modelId = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              seed = lib.mkOption {
+                type = t.nullOr (t.int);
+                default = null;
+              };
+              voiceId = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              voiceSettings = lib.mkOption {
+                type = t.nullOr (t.submodule { options = {
+                similarityBoost = lib.mkOption {
+                  type = t.nullOr (t.number);
+                  default = null;
+                };
+                speed = lib.mkOption {
+                  type = t.nullOr (t.number);
+                  default = null;
+                };
+                stability = lib.mkOption {
+                  type = t.nullOr (t.number);
+                  default = null;
+                };
+                style = lib.mkOption {
+                  type = t.nullOr (t.number);
+                  default = null;
+                };
+                useSpeakerBoost = lib.mkOption {
+                  type = t.nullOr (t.bool);
+                  default = null;
+                };
+              }; });
+                default = null;
+              };
+            }; });
+              default = null;
+            };
+            enabled = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            maxTextLength = lib.mkOption {
+              type = t.nullOr (t.int);
+              default = null;
+            };
+            mode = lib.mkOption {
+              type = t.nullOr (t.enum [ "final" "all" ]);
+              default = null;
+            };
+            modelOverrides = lib.mkOption {
+              type = t.nullOr (t.submodule { options = {
+              allowModelId = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              allowNormalization = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              allowProvider = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              allowSeed = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              allowText = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              allowVoice = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              allowVoiceSettings = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+              enabled = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+            }; });
+              default = null;
+            };
+            openai = lib.mkOption {
+              type = t.nullOr (t.submodule { options = {
+              apiKey = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              model = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+              voice = lib.mkOption {
+                type = t.nullOr (t.str);
+                default = null;
+              };
+            }; });
+              default = null;
+            };
+            prefsPath = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            provider = lib.mkOption {
+              type = t.nullOr (t.enum [ "elevenlabs" "openai" "edge" ]);
+              default = null;
+            };
+            summaryModel = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            timeoutMs = lib.mkOption {
+              type = t.nullOr (t.int);
+              default = null;
+            };
+          }; });
+            default = null;
+          };
+        }; });
+          default = null;
+        };
       }; }));
         default = null;
       };
@@ -3554,6 +3768,220 @@ in
           type = t.nullOr (t.submodule { options = {
           accentColor = lib.mkOption {
             type = t.nullOr (t.str);
+            default = null;
+          };
+        }; });
+          default = null;
+        };
+      }; });
+        default = null;
+      };
+      voice = lib.mkOption {
+        type = t.nullOr (t.submodule { options = {
+        autoJoin = lib.mkOption {
+          type = t.nullOr (t.listOf (t.submodule { options = {
+          channelId = lib.mkOption {
+            type = t.str;
+          };
+          guildId = lib.mkOption {
+            type = t.str;
+          };
+        }; }));
+          default = null;
+        };
+        enabled = lib.mkOption {
+          type = t.nullOr (t.bool);
+          default = null;
+        };
+        tts = lib.mkOption {
+          type = t.nullOr (t.submodule { options = {
+          auto = lib.mkOption {
+            type = t.nullOr (t.enum [ "off" "always" "inbound" "tagged" ]);
+            default = null;
+          };
+          edge = lib.mkOption {
+            type = t.nullOr (t.submodule { options = {
+            enabled = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            lang = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            outputFormat = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            pitch = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            proxy = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            rate = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            saveSubtitles = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            timeoutMs = lib.mkOption {
+              type = t.nullOr (t.int);
+              default = null;
+            };
+            voice = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            volume = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+          }; });
+            default = null;
+          };
+          elevenlabs = lib.mkOption {
+            type = t.nullOr (t.submodule { options = {
+            apiKey = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            applyTextNormalization = lib.mkOption {
+              type = t.nullOr (t.enum [ "auto" "on" "off" ]);
+              default = null;
+            };
+            baseUrl = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            languageCode = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            modelId = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            seed = lib.mkOption {
+              type = t.nullOr (t.int);
+              default = null;
+            };
+            voiceId = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            voiceSettings = lib.mkOption {
+              type = t.nullOr (t.submodule { options = {
+              similarityBoost = lib.mkOption {
+                type = t.nullOr (t.number);
+                default = null;
+              };
+              speed = lib.mkOption {
+                type = t.nullOr (t.number);
+                default = null;
+              };
+              stability = lib.mkOption {
+                type = t.nullOr (t.number);
+                default = null;
+              };
+              style = lib.mkOption {
+                type = t.nullOr (t.number);
+                default = null;
+              };
+              useSpeakerBoost = lib.mkOption {
+                type = t.nullOr (t.bool);
+                default = null;
+              };
+            }; });
+              default = null;
+            };
+          }; });
+            default = null;
+          };
+          enabled = lib.mkOption {
+            type = t.nullOr (t.bool);
+            default = null;
+          };
+          maxTextLength = lib.mkOption {
+            type = t.nullOr (t.int);
+            default = null;
+          };
+          mode = lib.mkOption {
+            type = t.nullOr (t.enum [ "final" "all" ]);
+            default = null;
+          };
+          modelOverrides = lib.mkOption {
+            type = t.nullOr (t.submodule { options = {
+            allowModelId = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            allowNormalization = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            allowProvider = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            allowSeed = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            allowText = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            allowVoice = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            allowVoiceSettings = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+            enabled = lib.mkOption {
+              type = t.nullOr (t.bool);
+              default = null;
+            };
+          }; });
+            default = null;
+          };
+          openai = lib.mkOption {
+            type = t.nullOr (t.submodule { options = {
+            apiKey = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            model = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+            voice = lib.mkOption {
+              type = t.nullOr (t.str);
+              default = null;
+            };
+          }; });
+            default = null;
+          };
+          prefsPath = lib.mkOption {
+            type = t.nullOr (t.str);
+            default = null;
+          };
+          provider = lib.mkOption {
+            type = t.nullOr (t.enum [ "elevenlabs" "openai" "edge" ]);
+            default = null;
+          };
+          summaryModel = lib.mkOption {
+            type = t.nullOr (t.str);
+            default = null;
+          };
+          timeoutMs = lib.mkOption {
+            type = t.nullOr (t.int);
             default = null;
           };
         }; });
@@ -8553,6 +8981,77 @@ in
     };
     responsePrefix = lib.mkOption {
       type = t.nullOr (t.str);
+      default = null;
+    };
+    statusReactions = lib.mkOption {
+      type = t.nullOr (t.submodule { options = {
+      emojis = lib.mkOption {
+        type = t.nullOr (t.submodule { options = {
+        coding = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        done = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        error = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        stallHard = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        stallSoft = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        thinking = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        tool = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        web = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+      }; });
+        default = null;
+      };
+      enabled = lib.mkOption {
+        type = t.nullOr (t.bool);
+        default = null;
+      };
+      timing = lib.mkOption {
+        type = t.nullOr (t.submodule { options = {
+        debounceMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
+        doneHoldMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
+        errorHoldMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
+        stallHardMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
+        stallSoftMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
+      }; });
+        default = null;
+      };
+    }; });
       default = null;
     };
     suppressToolErrors = lib.mkOption {
