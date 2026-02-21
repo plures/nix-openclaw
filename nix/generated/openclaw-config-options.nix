@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 3e1ed0032d650ca5cad7d6dbafc890a45ffbb9e2. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 02ac5b59d18f6edca14cec481d6156e03b759c87. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -5257,6 +5257,10 @@ in
         default = null;
       };
     }; });
+      default = null;
+    };
+    modelByChannel = lib.mkOption {
+      type = t.nullOr (t.attrsOf (t.attrsOf (t.str)));
       default = null;
     };
     msteams = lib.mkOption {
