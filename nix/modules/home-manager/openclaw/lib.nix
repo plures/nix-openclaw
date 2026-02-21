@@ -1,4 +1,8 @@
-{ config, lib, pkgs }:
+{
+  config,
+  lib,
+  pkgs,
+}:
 
 let
   cfg = config.programs.openclaw;
@@ -9,52 +13,51 @@ let
     toolNamesOverride = cfg.toolNames;
     excludeToolNames = effectiveExcludeTools;
   };
-  toolOverridesEnabled = cfg.toolNames != null || effectiveExcludeTools != [];
-  toolSets = import ../../tools/extended.nix ({ inherit pkgs; } // toolOverrides);
+  toolOverridesEnabled = cfg.toolNames != null || effectiveExcludeTools != [ ];
+  toolSets = import ../../../tools/extended.nix ({ inherit pkgs; } // toolOverrides);
   defaultPackage =
-    if toolOverridesEnabled && cfg.package == pkgs.openclaw
-    then (pkgs.openclawPackages.withTools toolOverrides).openclaw
-    else cfg.package;
+    if toolOverridesEnabled && cfg.package == pkgs.openclaw then
+      (pkgs.openclawPackages.withTools toolOverrides).openclaw
+    else
+      cfg.package;
   appPackage = if cfg.appPackage != null then cfg.appPackage else defaultPackage;
-  generatedConfigOptions = import ../../generated/openclaw-config-options.nix { lib = lib; };
+  generatedConfigOptions = import ../../../generated/openclaw-config-options.nix { lib = lib; };
+  pluginCatalog = import ./plugin-catalog.nix;
 
-  firstPartySources = let
-    stepieteRev = "76188dc559493e752f23a53d4563b77dea7c0428";
-    stepieteNarHash = "sha256-MlQ4G7MIkFDIvekIiucJEZP0FmeyOpwadI1dCq0EmSk=";
-    stepiete = tool:
-      "github:openclaw/nix-steipete-tools?dir=tools/${tool}&rev=${stepieteRev}&narHash=${stepieteNarHash}";
-  in {
-    summarize = stepiete "summarize";
-    peekaboo = stepiete "peekaboo";
-    oracle = stepiete "oracle";
-    poltergeist = stepiete "poltergeist";
-    sag = stepiete "sag";
-    camsnap = stepiete "camsnap";
-    gogcli = stepiete "gogcli";
-    bird = stepiete "bird";
-    sonoscli = stepiete "sonoscli";
-    imsg = stepiete "imsg";
-  };
+  bundledPluginSources =
+    let
+      stepieteRev = "c110209720cbc6c87fccb6c1e1c2b79b1d719245";
+      stepieteNarHash = "sha256-1Vo7rcLGdKaqj39J3HhBKh8IbljSjgCUhinCFJbDPl8=";
+      stepiete =
+        tool:
+        "github:openclaw/nix-steipete-tools?dir=tools/${tool}&rev=${stepieteRev}&narHash=${stepieteNarHash}";
+    in
+    lib.mapAttrs (_name: plugin: plugin.source or (stepiete plugin.tool)) pluginCatalog;
 
-  firstPartyPlugins = lib.filter (p: p != null) (lib.mapAttrsToList (name: source:
-    if (cfg.firstParty.${name}.enable or false) then { inherit source; } else null
-  ) firstPartySources);
+  bundledPlugins = lib.filter (p: p != null) (
+    lib.mapAttrsToList (
+      name: source:
+      let
+        pluginCfg = cfg.bundledPlugins.${name};
+      in
+      if (pluginCfg.enable or false) then
+        {
+          inherit source;
+          config = pluginCfg.config or { };
+        }
+      else
+        null
+    ) bundledPluginSources
+  );
 
-  effectivePlugins = cfg.plugins ++ firstPartyPlugins;
+  effectivePlugins = cfg.customPlugins ++ bundledPlugins;
 
-  resolvePath = p:
-    if lib.hasPrefix "~/" p then
-      "${homeDir}/${lib.removePrefix "~/" p}"
-    else
-      p;
+  resolvePath = p: if lib.hasPrefix "~/" p then "${homeDir}/${lib.removePrefix "~/" p}" else p;
 
-  toRelative = p:
-    if lib.hasPrefix "${homeDir}/" p then
-      lib.removePrefix "${homeDir}/" p
-    else
-      p;
+  toRelative = p: if lib.hasPrefix "${homeDir}/" p then lib.removePrefix "${homeDir}/" p else p;
 
-in {
+in
+{
   inherit
     cfg
     homeDir
@@ -64,9 +67,10 @@ in {
     defaultPackage
     appPackage
     generatedConfigOptions
-    firstPartySources
-    firstPartyPlugins
+    bundledPluginSources
+    bundledPlugins
     effectivePlugins
     resolvePath
-    toRelative;
+    toRelative
+    ;
 }

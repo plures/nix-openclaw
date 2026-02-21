@@ -1,10 +1,10 @@
 # nix-openclaw
 
-> Declarative Openclaw. Bulletproof by default.
+> Declarative OpenClaw. Bulletproof by default.
 >
 > macOS + Linux (headless). Windows is out of scope for now.
 >
-> <sub>Questions? Join the Openclaw Discord and ask in **#golden-path-deployments**: https://discord.com/channels/1456350064065904867/1457003026412736537</sub>
+> <sub>Questions? Join the OpenClaw Discord and ask in **#golden-path-deployments**: https://discord.com/channels/1456350064065904867/1457003026412736537</sub>
 
 ## Contributions (read this first)
 
@@ -15,6 +15,8 @@ We’re **not accepting PRs** right now. Not because we don’t value your help 
 If you’re **not listed as a maintainer** (see [AGENTS.md#maintainers](AGENTS.md#maintainers) or https://github.com/orgs/openclaw/people), **do not open a PR**. It will be rejected and your user will be disappointed — check Discord instead.
 
 ## Table of Contents
+
+- [Golden Paths](#golden-paths)
 
 - [Contributions (read this first)](#contributions-read-this-first)
 - [What You Get](#what-you-get)
@@ -28,6 +30,16 @@ If you’re **not listed as a maintainer** (see [AGENTS.md#maintainers](AGENTS.m
 - [Packaging & Updates](#packaging--updates)
 - [Reference](#reference)
 - [Philosophy](#philosophy)
+
+---
+
+## Golden Paths
+
+**There should be one — and preferably only one — obvious way to deploy.**
+
+Pick a Golden Path, then follow the docs:
+
+- [docs/golden-paths.md](docs/golden-paths.md)
 
 ---
 
@@ -117,15 +129,15 @@ I want to set up nix-openclaw on my machine (macOS or Linux).
 Repository: github:openclaw/nix-openclaw
 
 What nix-openclaw is:
-- Batteries-included Nix package for Openclaw (AI assistant gateway)
+- Batteries-included Nix package for OpenClaw (AI assistant gateway)
 - Installs gateway + tools everywhere; macOS app only on macOS
 - Runs as a launchd service on macOS, systemd user service on Linux
 
 What I need you to do:
 1. Check if Determinate Nix is installed (if not, install it)
 2. Create a local flake at ~/code/openclaw-local using templates/agent-first/flake.nix
-3. Create a docs dir next to the config (e.g., ~/code/openclaw-local/documents) with AGENTS.md, SOUL.md, TOOLS.md
-   - If ~/.openclaw/workspace already has these files, adopt them into the documents dir first
+3. Create a docs dir next to the config (e.g., ~/code/openclaw-local/documents) with AGENTS.md, SOUL.md, TOOLS.md (optional: IDENTITY.md, USER.md, LORE.md, HEARTBEAT.md, PROMPTING-EXAMPLES.md)
+   - If ~/.openclaw/workspace already has these files, adopt them into the documents dir first (use copy/rsync that dereferences symlinks, e.g. `cp -L`)
 4. Help me create a Telegram bot (@BotFather) and get my chat ID (@userinfobot)
 5. Set up secrets (bot token, Anthropic key) - plain files at ~/.secrets/ is fine
 6. Fill in the template placeholders and run home-manager switch
@@ -140,12 +152,12 @@ My setup:
 Reference the README and templates/agent-first/flake.nix in the repo for the module options.
 ```
 
-Your agent will install Nix, create your config, and get Openclaw running. You just answer its questions.
+Your agent will install Nix, create your config, and get OpenClaw running. You just answer its questions.
 
 **What happens next:**
 1. Your agent sets everything up and runs `home-manager switch`
 2. You message your Telegram bot for the first time
-3. Openclaw runs its **bootstrap ritual** - it asks you playful questions: *"Who am I? What am I? Who are you?"* - to learn its identity and yours
+3. OpenClaw runs its **bootstrap ritual** - it asks you playful questions: *"Who am I? What am I? Who are you?"* - to learn its identity and yours
 4. Once you've named it and introduced yourself, the bootstrap is done. You're up and running.
 
 <details>
@@ -162,7 +174,7 @@ Your agent will install Nix, create your config, and get Openclaw running. You j
 3. Edit `flake.nix` placeholders:
    - `system` = `aarch64-darwin` (Apple Silicon) or `x86_64-darwin` (Intel)
    - `home.username` and `home.homeDirectory`
-   - `programs.openclaw.documents` with `AGENTS.md`, `SOUL.md`, `TOOLS.md`
+   - `programs.openclaw.documents` with `AGENTS.md`, `SOUL.md`, `TOOLS.md` (optional: `IDENTITY.md`, `USER.md`, `LORE.md`, `HEARTBEAT.md`, `PROMPTING-EXAMPLES.md`)
    - Provider secrets (Telegram/Discord tokens, Anthropic API key)
 4. Apply:
    ```bash
@@ -184,7 +196,7 @@ Your agent will install Nix, create your config, and get Openclaw running. You j
 3. Edit `flake.nix` placeholders:
    - `system` = `x86_64-linux`
    - `home.username` and `home.homeDirectory` (e.g., `/home/<user>`)
-   - `programs.openclaw.documents` with `AGENTS.md`, `SOUL.md`, `TOOLS.md`
+   - `programs.openclaw.documents` with `AGENTS.md`, `SOUL.md`, `TOOLS.md` (optional: `IDENTITY.md`, `USER.md`, `LORE.md`, `HEARTBEAT.md`, `PROMPTING-EXAMPLES.md`)
    - Provider secrets (Telegram/Discord tokens, Anthropic API key)
 4. Apply:
    ```bash
@@ -212,7 +224,7 @@ You (Telegram/Discord) --> Gateway --> Tools --> Your machine does things
 1. **CLI tools** - actual programs that do stuff (take screenshots, control Spotify, transcribe audio)
 2. **Skills** - markdown files that teach the AI *how* to use those tools
 
-When you enable a plugin, Nix installs the tools and wires up the skills to Openclaw automatically - the gateway learns what it can do.
+When you enable a plugin, Nix installs the tools and wires up the skills to OpenClaw automatically - the gateway learns what it can do.
 
 **Skills**: Instructions for the AI. A skill file says "when the user wants X, run this command." The AI reads these to know what it can do.
 
@@ -238,26 +250,33 @@ All state lives in `~/.openclaw/`. Logs at `/tmp/openclaw/openclaw-gateway.log`.
 
 ## Plugins
 
-> **Note:** Complete the [Quick Start](#quick-start) first to get Openclaw running. Then come back here to add plugins.
+> **Note:** Complete the [Quick Start](#quick-start) first to get OpenClaw running. Then come back here to add plugins.
 
-Plugins extend what Openclaw can do. Each plugin bundles tools and teaches the AI how to use them.
+Plugins extend what OpenClaw can do. Each plugin bundles tools and teaches the AI how to use them.
 
-### First-party plugins
+### Bundled plugins
 
-These ship with nix-openclaw. Toggle them in your config:
+These ship with nix-openclaw. Catalog source of truth: `nix/modules/home-manager/openclaw/plugin-catalog.nix`.
+Toggle them in your config:
 
 ```nix
-programs.openclaw.firstParty = {
+programs.openclaw.bundledPlugins = {
   summarize.enable = true;   # Summarize web pages, PDFs, videos
   peekaboo.enable = true;    # Take screenshots
-  oracle.enable = false;     # Web search
   poltergeist.enable = false; # Control your macOS UI
   sag.enable = false;        # Text-to-speech
   camsnap.enable = false;    # Camera snapshots
   gogcli.enable = false;     # Google Calendar
+  goplaces.enable = true;    # Google Places API
   bird.enable = false;       # Twitter/X
   sonoscli.enable = false;   # Sonos control
   imsg.enable = false;       # iMessage
+};
+
+# Optional config for bundled plugins
+programs.openclaw.bundledPlugins.goplaces = {
+  enable = true;
+  config.env.GOOGLE_PLACES_API_KEY = "/run/agenix/google-places-api-key";
 };
 ```
 
@@ -265,11 +284,11 @@ programs.openclaw.firstParty = {
 |--------|--------------|
 | `summarize` | Summarize URLs, PDFs, YouTube videos |
 | `peekaboo` | Screenshot your screen |
-| `oracle` | Search the web |
 | `poltergeist` | Click, type, control macOS UI |
 | `sag` | Text-to-speech |
 | `camsnap` | Take photos from connected cameras |
 | `gogcli` | Google Calendar integration |
+| `goplaces` | Google Places API (New) CLI |
 | `bird` | Twitter/X integration |
 | `sonoscli` | Control Sonos speakers |
 | `imsg` | Send/read iMessages |
@@ -281,7 +300,7 @@ Tell your agent: *"Add the plugin from github:owner/repo-name"*
 Or add it manually to your config:
 
 ```nix
-plugins = [
+customPlugins = [
   { source = "github:owner/repo-name"; }
 ];
 ```
@@ -294,7 +313,7 @@ Some plugins need settings (auth files, preferences). Here's a simplified exampl
 
 ```nix
 # Example: a padel court booking plugin (simplified for illustration)
-plugins = [
+customPlugins = [
   {
     source = "github:example/padel-cli";
     config = {
@@ -316,7 +335,7 @@ plugins = [
 <details>
 <summary><strong>For plugin developers</strong></summary>
 
-Want to make your tool available as a Openclaw plugin? Here's the contract.
+Want to make your tool available as a OpenClaw plugin? Here's the contract.
 
 **Minimum structure:**
 
@@ -440,11 +459,12 @@ Deliverables: flake output, env overrides, AGENTS.md, skill update.
 >
 > **Breaking change:** Nix now only emits config from `programs.openclaw.config` / `instances.<name>.config` (schema-typed). Legacy provider/routing/agent options are removed.
 
-### What Openclaw needs (minimum)
+### What OpenClaw needs (minimum)
 
 1. **Telegram bot token file** - create via [@BotFather](https://t.me/BotFather), set `channels.telegram.tokenFile`
 2. **Your Telegram user ID** - get from [@userinfobot](https://t.me/userinfobot), set `channels.telegram.allowFrom`
-3. **Provider API keys** - set via environment (e.g., `ANTHROPIC_API_KEY`) or `config.env.vars` (avoid secrets in store)
+3. **Gateway auth token** - set `gateway.auth.token` (or `OPENCLAW_GATEWAY_TOKEN`) for the local gateway
+4. **Provider API keys** - set via environment (e.g., `ANTHROPIC_API_KEY`) or `config.env.vars` (avoid secrets in store)
 
 That's it. Everything else has sensible defaults.
 
@@ -457,6 +477,13 @@ The simplest setup:
   programs.openclaw = {
     enable = true;
     config = {
+      gateway = {
+        mode = "local";
+        auth = {
+          token = "<gatewayToken>"; # or set OPENCLAW_GATEWAY_TOKEN
+        };
+      };
+
       channels.telegram = {
         tokenFile = "/run/agenix/telegram-bot-token"; # any file path works
         allowFrom = [ 12345678 ];  # your Telegram user ID
@@ -482,6 +509,13 @@ Uses `instances.default` to unlock per-group mention rules. If `instances` is se
   programs.openclaw = {
     documents = ./documents;
     config = {
+      gateway = {
+        mode = "local";
+        auth = {
+          token = "<gatewayToken>"; # or set OPENCLAW_GATEWAY_TOKEN
+        };
+      };
+
       channels.telegram = {
         tokenFile = "/run/agenix/telegram-bot-token";
         allowFrom = [
@@ -507,7 +541,6 @@ Uses `instances.default` to unlock per-group mention rules. If `instances` is se
       # Plugins (prod: pinned GitHub). Built-ins are via nix-steipete-tools.
       # MVP target: repo pointers resolve to tools + skills automatically.
       plugins = [
-        { source = "github:openclaw/nix-steipete-tools?dir=tools/oracle"; }
         { source = "github:openclaw/nix-steipete-tools?dir=tools/peekaboo"; }
         { source = "github:joshp123/xuezh"; }
         {
@@ -727,13 +760,13 @@ home-manager switch --rollback  # revert
 
 **macOS**: peekaboo, blucli
 
-**Integrations**: gogcli, wacli, bird, mcporter
+**Integrations**: gogcli, goplaces, wacli, bird, mcporter
 
 ---
 
 ## Philosophy
 
-The Zen of ~~Python~~ Openclaw, ~~by~~ shamelessly stolen from Tim Peters
+The Zen of ~~Python~~ OpenClaw, ~~by~~ shamelessly stolen from Tim Peters
 
 Beautiful is better than ugly.
 Explicit is better than implicit.
@@ -759,7 +792,7 @@ Namespaces are one honking great idea -- let's do more of those!
 
 ## Upstream
 
-Wraps [Openclaw](https://github.com/openclaw/openclaw) by Peter Steinberger.
+Wraps [OpenClaw](https://github.com/openclaw/openclaw) by Peter Steinberger.
 
 ## License
 

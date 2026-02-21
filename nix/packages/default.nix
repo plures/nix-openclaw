@@ -1,8 +1,9 @@
-{ pkgs
-, sourceInfo ? import ../sources/openclaw-source.nix
-, steipetePkgs ? {}
-, toolNamesOverride ? null
-, excludeToolNames ? []
+{
+  pkgs,
+  sourceInfo ? import ../sources/openclaw-source.nix,
+  steipetePkgs ? { },
+  toolNamesOverride ? null,
+  excludeToolNames ? [ ],
 }:
 let
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
@@ -26,8 +27,10 @@ let
     openclaw-app = openclawApp;
     extendedTools = toolSets.tools;
   };
-in {
+in
+{
   openclaw-gateway = openclawGateway;
   openclaw = openclawBundle;
   openclaw-tools = openclawTools;
-} // (if isDarwin then { openclaw-app = openclawApp; } else {})
+}
+// (if isDarwin then { openclaw-app = openclawApp; } else { })

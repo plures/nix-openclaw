@@ -1,5 +1,5 @@
 {
-  description = "Openclaw local";
+  description = "OpenClaw local";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -8,12 +8,22 @@
     nix-openclaw.url = "github:openclaw/nix-openclaw";
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-openclaw }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nix-openclaw,
+    }:
     let
       # REPLACE: aarch64-darwin (Apple Silicon), x86_64-darwin (Intel), or x86_64-linux
       system = "<system>";
-      pkgs = import nixpkgs { inherit system; overlays = [ nix-openclaw.overlays.default ]; };
-    in {
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ nix-openclaw.overlays.default ];
+      };
+    in
+    {
       # REPLACE: <user> with your username (run `whoami`)
       homeConfigurations."<user>" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -31,15 +41,25 @@
               # REPLACE: path to your managed documents directory
               documents = ./documents;
 
-              # Schema-typed Openclaw config (from upstream)
+              # Schema-typed OpenClaw config (from upstream)
               config = {
+                gateway = {
+                  mode = "local";
+                  auth = {
+                    # REPLACE: long random token for gateway auth
+                    token = "<gatewayToken>";
+                  };
+                };
+
                 channels.telegram = {
                   # REPLACE: path to your bot token file
                   tokenFile = "<tokenPath>";
                   # REPLACE: your Telegram user ID (get from @userinfobot)
                   allowFrom = [ <allowFrom> ];
                   groups = {
-                    "*" = { requireMention = true; };
+                    "*" = {
+                      requireMention = true;
+                    };
                   };
                 };
               };

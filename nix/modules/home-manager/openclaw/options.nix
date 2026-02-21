@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   openclawLib = import ./lib.nix { inherit config lib pkgs; };
   instanceModule = import ./options-instance.nix { inherit lib openclawLib; };
+  pluginCatalog = import ./plugin-catalog.nix;
   mkSkillOption = lib.types.submodule {
     options = {
       name = lib.mkOption {
@@ -30,7 +36,11 @@ let
         description = "Optional openclaw metadata for the skill frontmatter.";
       };
       mode = lib.mkOption {
-        type = lib.types.enum [ "symlink" "copy" "inline" ];
+        type = lib.types.enum [
+          "symlink"
+          "copy"
+          "inline"
+        ];
         default = "symlink";
         description = "Install mode for the skill (symlink/copy/inline).";
       };
@@ -42,14 +52,15 @@ let
     };
   };
 
-in {
+in
+{
   options.programs.openclaw = {
-    enable = lib.mkEnableOption "Openclaw (batteries-included)";
+    enable = lib.mkEnableOption "OpenClaw (batteries-included)";
 
     package = lib.mkOption {
       type = lib.types.package;
       default = pkgs.openclaw;
-      description = "Openclaw batteries-included package.";
+      description = "OpenClaw batteries-included package.";
     };
 
     toolNames = lib.mkOption {
@@ -60,32 +71,40 @@ in {
 
     excludeTools = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
       description = "Tool names to remove from the built-in toolchain.";
     };
 
     appPackage = lib.mkOption {
       type = lib.types.nullOr lib.types.package;
       default = null;
-      description = "Optional Openclaw app package (defaults to package if unset).";
+      description = "Optional OpenClaw app package (defaults to package if unset).";
     };
 
     installApp = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Install Openclaw.app at the default location.";
+      description = "Install OpenClaw.app at the default location.";
     };
 
     stateDir = lib.mkOption {
       type = lib.types.str;
       default = "${openclawLib.homeDir}/.openclaw";
-      description = "State directory for Openclaw (logs, sessions, config).";
+      description = "State directory for OpenClaw (logs, sessions, config).";
     };
 
     workspaceDir = lib.mkOption {
       type = lib.types.str;
-      default = "${openclawLib.homeDir}/.openclaw/workspace";
-      description = "Workspace directory for Openclaw agent skills.";
+      default = "${config.programs.openclaw.stateDir}/workspace";
+      description = "Workspace directory for Openclaw agent skills (defaults to stateDir/workspace).";
+    };
+
+    workspace = {
+      pinAgentDefaults = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Pin agents.defaults.workspace to each instance workspaceDir when unset (prevents falling back to template ~/.openclaw/workspace).";
+      };
     };
 
     documents = lib.mkOption {
@@ -96,97 +115,77 @@ in {
 
     skills = lib.mkOption {
       type = lib.types.listOf mkSkillOption;
-      default = [];
+      default = [ ];
       description = "Declarative skills installed into each instance workspace.";
     };
 
-    plugins = lib.mkOption {
-      type = lib.types.listOf (lib.types.submodule {
-        options = {
-          source = lib.mkOption {
-            type = lib.types.str;
-            description = "Plugin source pointer (e.g., github:owner/repo or path:/...).";
+    customPlugins = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            source = lib.mkOption {
+              type = lib.types.str;
+              description = "Plugin source pointer (e.g., github:owner/repo or path:/...).";
+            };
+            config = lib.mkOption {
+              type = lib.types.attrs;
+              default = { };
+              description = "Plugin-specific configuration (env/files/etc).";
+            };
           };
-          config = lib.mkOption {
-            type = lib.types.attrs;
-            default = {};
-            description = "Plugin-specific configuration (env/files/etc).";
-          };
-        };
-      });
-      default = [];
-      description = "Plugins enabled for the default instance (merged with first-party toggles).";
+        }
+      );
+      default = [ ];
+      description = "Custom/community plugins (merged with bundled plugin toggles).";
     };
 
-    firstParty = {
-      summarize.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the summarize plugin (first-party).";
-      };
-      peekaboo.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the peekaboo plugin (first-party).";
-      };
-      oracle.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the oracle plugin (first-party).";
-      };
-      poltergeist.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the poltergeist plugin (first-party).";
-      };
-      sag.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the sag plugin (first-party).";
-      };
-      camsnap.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the camsnap plugin (first-party).";
-      };
-      gogcli.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the gogcli plugin (first-party).";
-      };
-      bird.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the bird plugin (first-party).";
-      };
-      sonoscli.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the sonoscli plugin (first-party).";
-      };
-      imsg.enable = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Enable the imsg plugin (first-party).";
-      };
-    };
+    bundledPlugins =
+      lib.mapAttrs
+        (
+          name: plugin:
+          {
+            enable = lib.mkOption {
+              type = lib.types.bool;
+              default = plugin.defaultEnable or false;
+              description = "Enable the ${name} plugin (bundled).";
+            };
+            config = lib.mkOption {
+              type = lib.types.attrs;
+              default = { };
+              description = "Bundled plugin configuration passed through to ${name} (env/settings).";
+            };
+          }
+        )
+        pluginCatalog;
 
     launchd.enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Run Openclaw gateway via launchd (macOS).";
+      description = "Run OpenClaw gateway via launchd (macOS).";
+    };
+
+    launchd.label = lib.mkOption {
+      type = lib.types.str;
+      default = "com.steipete.openclaw.gateway";
+      description = "launchd label for the default OpenClaw instance.";
     };
 
     systemd.enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Run Openclaw gateway via systemd user service (Linux).";
+      description = "Run OpenClaw gateway via systemd user service (Linux).";
+    };
+
+    systemd.unitName = lib.mkOption {
+      type = lib.types.str;
+      default = "openclaw-gateway";
+      description = "systemd user service unit name for the default OpenClaw instance.";
     };
 
     instances = lib.mkOption {
       type = lib.types.attrsOf (lib.types.submodule instanceModule);
-      default = {};
-      description = "Named Openclaw instances (prod/test).";
+      default = { };
+      description = "Named OpenClaw instances (prod/test).";
     };
 
     exposePluginPackages = lib.mkOption {
@@ -205,8 +204,8 @@ in {
 
     config = lib.mkOption {
       type = lib.types.submodule { options = openclawLib.generatedConfigOptions; };
-      default = {};
-      description = "Openclaw config (schema-typed).";
+      default = { };
+      description = "OpenClaw config (schema-typed).";
     };
   };
 }

@@ -49,7 +49,7 @@ Defaults:
 - NEVER send any message (iMessage, email, SMS, etc.) without explicit user confirmation:
   - Always show the full message text and ask: “I’m going to send this: <message>. Send? (y/n)”
 
-Openclaw packaging:
+OpenClaw packaging:
 - The gateway package must include Control UI assets (run `pnpm ui:build` in the Nix build).
 
 Golden path for pins (yolo + manual bumps):
@@ -62,9 +62,15 @@ Golden path for pins (yolo + manual bumps):
 - To verify freshness: `git pull --ff-only` and check `nix/sources/openclaw-source.nix` vs `git ls-remote https://github.com/openclaw/openclaw.git refs/heads/main`.
 - If upstream is moving fast and tighter freshness is needed, trigger yolo manually: `gh workflow run "Yolo Update Pins"`.
 
+CI polling (hard rule):
+- Never say "I'll keep polling" unless you are **already** running a blocking loop.
+- If you must report status, confirm the loop is active (`tmux ls` / session name).
+- Use a blocking bash loop in tmux (preferred) or a sub-agent; do not fake it.
+- Example: `tmux new -s nix-openclaw-ci '/tmp/poll-nix-openclaw-ci.sh'`.
+
 Philosophy:
 
-The Zen of ~~Python~~ Openclaw, ~~by~~ shamelessly stolen from Tim Peters
+The Zen of ~~Python~~ OpenClaw, ~~by~~ shamelessly stolen from Tim Peters
 
 Beautiful is better than ugly.  
 Explicit is better than implicit.  

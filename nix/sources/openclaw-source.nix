@@ -1,8 +1,8 @@
-# Pinned Openclaw source for nix-openclaw
+# Pinned OpenClaw source for nix-openclaw
 {
   owner = "openclaw";
   repo = "openclaw";
-  rev = "85dd070dea273a0b6eee17ba4bfcad6463eeb795";
-  hash = "sha256-qH2tJyFkSGld37CYSJdMVYQ/1VySrshyUOi3huoavCQ=";
-  pnpmDepsHash = "sha256-4lDrk6zZoAREqYtKsqMV3Nnb27FYyBkO2ZOST1JP4U4=";
+  rev = "665221a1f03ad8ff455e0a3e2b92d495b28f50bc";
+  hash = "sha256-8qIG1PLOekURAErWQSLkbPC53SGEw63Uca2X0P4eAhU=";
+  pnpmDepsHash = "sha256-BbgSf4Fz8S9u07WNGobqVCanMZLoGu3kGUvU1dYk4bE=";
 }

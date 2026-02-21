@@ -1,6 +1,6 @@
-# Openclaw Plugin Architecture (Maintainer Memo)
+# OpenClaw Plugin Architecture (Maintainer Memo)
 
-Purpose: extend Openclaw capabilities without bloating core; ship tools + skills + config as reproducible units you can pin, test, and roll back. nix-openclaw shows the contract; Openclaw core should treat the same interface as first-class, even off-Nix.
+Purpose: extend OpenClaw capabilities without bloating core; ship tools + skills + config as reproducible units you can pin, test, and roll back. nix-openclaw shows the contract; OpenClaw core should treat the same interface as first-class, even off-Nix.
 
 ## What a Plugin Is (and is not)
 - **Is:** bundle of binaries/CLIs, skills that teach the agent to use them, optional config/env requirements.
@@ -52,7 +52,7 @@ plugins = [
 - Invariant: providing `settings` requires at least one `stateDir`.
 
 ## Dev workflow (fast iteration)
-- Worktree: build and test plugins outside the core repo; point Openclaw at a local path source (e.g., `source = "path:/Users/you/code/my-plugin"`).
+- Worktree: build and test plugins outside the core repo; point OpenClaw at a local path source (e.g., `source = "path:/Users/you/code/my-plugin"`).
 - Rebuild loop: change plugin → `home-manager switch` (or host-equivalent) → gateway restarts with new PATH/skills/config; no manual copying.
 - Name collisions: use the same plugin `name` to override a pinned version (last entry wins); keep unique names otherwise to avoid surprise overrides.
 - Skills placement: skills land under `~/.openclaw*/workspace/skills/<plugin>/...` so you can inspect quickly; delete the workspace to fully reset cached skills.
@@ -61,7 +61,7 @@ plugins = [
 
 ## Examples
 
-### Minimal capability plugin (first-party `summarize`)
+### Minimal capability plugin (bundled `summarize`)
 Enable (host side):
 
 ```nix
@@ -130,9 +130,10 @@ openclawPlugin = {
 
 Host behavior: creates `~/.config/xuezh/config.json` from `settings`; exports both envs; fails if the pointed files are missing/empty.
 
-## First-Party Plugin Set (current)
-- summarize, peekaboo, oracle, poltergeist, sag, camsnap, gogcli, bird, sonoscli, imsg.
-- Each follows the same contract: packages + skills; env/state declared via `needs`; enabled via config toggle; sources pinned (see nix-openclaw firstParty mapping).
+## Bundled Plugin Set (current)
+- summarize, peekaboo, poltergeist, sag, camsnap, gogcli, goplaces, bird, sonoscli, imsg.
+- Source of truth: `nix/modules/home-manager/openclaw/plugin-catalog.nix`.
+- Each follows the same contract: packages + skills; env/state declared via `needs`; enabled via config toggle; sources pinned via the bundled plugin catalog.
 
 ## Authoring Rules
 - Keep CLIs configurable via env; honor XDG paths; no inline scripts.
@@ -144,6 +145,6 @@ Host behavior: creates `~/.config/xuezh/config.json` from `settings`; exports bo
 ## Why this approach
 - Capability grounding: skills map to real tools, not hypothetical ones.
 - Reproducibility: versioned bundle of tool + skill + config schema; easy rollback.
-- Clean core: main Openclaw stays transport/model-focused; plugins carry integrations.
+- Clean core: main OpenClaw stays transport/model-focused; plugins carry integrations.
 - Operational sanity: one toggle wires tools, env, skills; failure is explicit and early.
 - Portability: contract is host-agnostic; Nix just enforces determinism and zero drift.
