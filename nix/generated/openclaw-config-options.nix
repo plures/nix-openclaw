@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 8e04d1fe156acfcd4df5b216f2e3f8bd5fe3e287. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev a2d73be3a4f6bf8648299a5d4f576c0e8a7f24f8. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -378,6 +378,10 @@ in
           default = null;
         };
         reserveTokensFloor = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
+        timeoutSeconds = lib.mkOption {
           type = t.nullOr (t.int);
           default = null;
         };
