@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 1c4f52d6a1164e437ba39458b7fd93c0c44248d9. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 84c0326f4de9970d0aac8c6187077d3e2cd24561. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -8576,6 +8576,10 @@ in
             type = t.nullOr (t.bool);
             default = null;
           };
+          editForumTopic = lib.mkOption {
+            type = t.nullOr (t.bool);
+            default = null;
+          };
           editMessage = lib.mkOption {
             type = t.nullOr (t.bool);
             default = null;
@@ -9202,6 +9206,10 @@ in
           default = null;
         };
         deleteMessage = lib.mkOption {
+          type = t.nullOr (t.bool);
+          default = null;
+        };
+        editForumTopic = lib.mkOption {
           type = t.nullOr (t.bool);
           default = null;
         };
