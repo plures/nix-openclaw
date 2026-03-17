@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 4bba2888e7c1a1095c9f3839df6ea5f0a4644669. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev dbe77d0425ff93957eaeede03a8883b40340c0f0. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -10690,6 +10690,10 @@ in
       type = t.nullOr (t.bool);
       default = null;
     };
+    mcp = lib.mkOption {
+      type = t.nullOr (t.bool);
+      default = null;
+    };
     native = lib.mkOption {
       type = t.nullOr (t.oneOf [ (t.bool) (t.enum [ "auto" ]) ]);
       default = null;
@@ -11922,6 +11926,41 @@ in
     };
     redactSensitive = lib.mkOption {
       type = t.nullOr (t.oneOf [ (t.enum [ "off" ]) (t.enum [ "tools" ]) ]);
+      default = null;
+    };
+  }; });
+    default = null;
+  };
+
+  mcp = lib.mkOption {
+    type = t.nullOr (t.submodule { options = {
+    servers = lib.mkOption {
+      type = t.nullOr (t.attrsOf (t.submodule { options = {
+      args = lib.mkOption {
+        type = t.nullOr (t.listOf (t.str));
+        default = null;
+      };
+      command = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
+      cwd = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
+      env = lib.mkOption {
+        type = t.nullOr (t.attrsOf (t.oneOf [ (t.str) (t.number) (t.bool) ]));
+        default = null;
+      };
+      url = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
+      workingDirectory = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
+    }; }));
       default = null;
     };
   }; });
