@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev d9e776eb475989c0f855440c8a27cc975597b2c4. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 2f3bc89f4fac96fa01d66e37fc3207e864906c52. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -12886,7 +12886,7 @@ in
             default = null;
           };
           thinkingFormat = lib.mkOption {
-            type = t.nullOr (t.oneOf [ (t.enum [ "openai" ]) (t.enum [ "zai" ]) (t.enum [ "qwen" ]) (t.enum [ "qwen-chat-template" ]) ]);
+            type = t.nullOr (t.oneOf [ (t.enum [ "openai" ]) (t.enum [ "zai" ]) (t.enum [ "qwen" ]) ]);
             default = null;
           };
           toolCallArgumentsEncoding = lib.mkOption {
