@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 8fb24ac3cea0e87b9d154416ca575ed400b3b150. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev ea4da7dfcc5227cf73fc26c63f635fa9c8945c49. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -3148,6 +3148,15 @@ in
         default = null;
       };
     }; };
+    };
+    session = lib.mkOption {
+      type = t.nullOr (t.submodule { options = {
+      dmScope = lib.mkOption {
+        type = t.nullOr (t.oneOf [ (t.enum [ "main" ]) (t.enum [ "per-peer" ]) (t.enum [ "per-channel-peer" ]) (t.enum [ "per-account-channel-peer" ]) ]);
+        default = null;
+      };
+    }; });
+      default = null;
     };
     type = lib.mkOption {
       type = t.nullOr (t.enum [ "route" ]);
@@ -6972,6 +6981,10 @@ in
     };
     silenceTimeoutMs = lib.mkOption {
       type = t.nullOr (t.int);
+      default = null;
+    };
+    speechLocale = lib.mkOption {
+      type = t.nullOr (t.str);
       default = null;
     };
   }; });
