@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 0d274ef6c284ee64bb7a43ebbc527eec3a299e31. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev a00c2258997ab0ca623b57dab65e192350b5f31d. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -685,6 +685,10 @@ in
           type = t.nullOr (t.str);
           default = null;
         };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
       }; }) ]);
         default = null;
       };
@@ -700,6 +704,10 @@ in
         };
         primary = lib.mkOption {
           type = t.nullOr (t.str);
+          default = null;
+        };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
           default = null;
         };
       }; }) ]);
@@ -1069,6 +1077,10 @@ in
           type = t.nullOr (t.str);
           default = null;
         };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
       }; }) ]);
         default = null;
       };
@@ -1099,6 +1111,10 @@ in
           type = t.nullOr (t.str);
           default = null;
         };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
+          default = null;
+        };
       }; }) ]);
         default = null;
       };
@@ -1122,6 +1138,10 @@ in
         };
         primary = lib.mkOption {
           type = t.nullOr (t.str);
+          default = null;
+        };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
           default = null;
         };
       }; }) ]);
@@ -1602,6 +1622,10 @@ in
             type = t.nullOr (t.str);
             default = null;
           };
+          timeoutMs = lib.mkOption {
+            type = t.nullOr (t.int);
+            default = null;
+          };
         }; }) ]);
           default = null;
         };
@@ -1660,6 +1684,10 @@ in
         };
         primary = lib.mkOption {
           type = t.nullOr (t.str);
+          default = null;
+        };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
           default = null;
         };
       }; }) ]);
@@ -2209,6 +2237,10 @@ in
         };
         primary = lib.mkOption {
           type = t.nullOr (t.str);
+          default = null;
+        };
+        timeoutMs = lib.mkOption {
+          type = t.nullOr (t.int);
           default = null;
         };
       }; }) ]);
