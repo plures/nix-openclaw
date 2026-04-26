@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 67b9167b808f2ff065c91665d6f36256a5c23ef2. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev dce35b90fe8fa09ea51a666195b7645c260d6cbf. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
