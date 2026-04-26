@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 57f05128cba9c3cf2e8b0cb52a54ae7daa7a8608. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 839e7c98ffebae742fbdca5b2410868fb847e382. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -3743,8 +3743,16 @@ in
         type = t.nullOr (t.bool);
         default = null;
       };
+      logsEndpoint = lib.mkOption {
+        type = t.nullOr (t.str);
+        default = null;
+      };
       metrics = lib.mkOption {
         type = t.nullOr (t.bool);
+        default = null;
+      };
+      metricsEndpoint = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
       protocol = lib.mkOption {
@@ -3761,6 +3769,10 @@ in
       };
       traces = lib.mkOption {
         type = t.nullOr (t.bool);
+        default = null;
+      };
+      tracesEndpoint = lib.mkOption {
+        type = t.nullOr (t.str);
         default = null;
       };
     }; });
