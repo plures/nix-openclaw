@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 73cacebac3ef21e0c8a7ef355128ef190d22e99a. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 57f05128cba9c3cf2e8b0cb52a54ae7daa7a8608. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -6295,86 +6295,6 @@ in
           default = null;
         };
       }; });
-        default = null;
-      };
-    }; }));
-      default = null;
-    };
-    installs = lib.mkOption {
-      type = t.nullOr (t.attrsOf (t.submodule { options = {
-      clawhubChannel = lib.mkOption {
-        type = t.nullOr (t.oneOf [ (t.enum [ "official" ]) (t.enum [ "community" ]) (t.enum [ "private" ]) ]);
-        default = null;
-      };
-      clawhubFamily = lib.mkOption {
-        type = t.nullOr (t.oneOf [ (t.enum [ "code-plugin" ]) (t.enum [ "bundle-plugin" ]) ]);
-        default = null;
-      };
-      clawhubPackage = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      clawhubUrl = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      installPath = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      installedAt = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      integrity = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      marketplaceName = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      marketplacePlugin = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      marketplaceSource = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      resolvedAt = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      resolvedName = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      resolvedSpec = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      resolvedVersion = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      shasum = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      source = lib.mkOption {
-        type = t.oneOf [ (t.oneOf [ (t.enum [ "npm" ]) (t.enum [ "archive" ]) (t.enum [ "path" ]) (t.enum [ "clawhub" ]) ]) (t.enum [ "marketplace" ]) ];
-      };
-      sourcePath = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      spec = lib.mkOption {
-        type = t.nullOr (t.str);
-        default = null;
-      };
-      version = lib.mkOption {
-        type = t.nullOr (t.str);
         default = null;
       };
     }; }));
