@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 6c1cffa7f887107bcfa16ed8be37bfa2ea05b1db. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 409e76281020dca6265becdebe7dbd4727dcf637. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -3785,6 +3785,10 @@ in
         type = t.nullOr (t.bool);
         default = null;
       };
+      includeSkipped = lib.mkOption {
+        type = t.nullOr (t.bool);
+        default = null;
+      };
       mode = lib.mkOption {
         type = t.nullOr (t.enum [ "announce" "webhook" ]);
         default = null;
@@ -5766,6 +5770,14 @@ in
       baseUrl = lib.mkOption {
         type = t.str;
       };
+      contextTokens = lib.mkOption {
+        type = t.nullOr (t.int);
+        default = null;
+      };
+      contextWindow = lib.mkOption {
+        type = t.nullOr (t.number);
+        default = null;
+      };
       headers = lib.mkOption {
         type = t.nullOr (t.attrsOf (t.oneOf [ (t.str) (t.oneOf [ (t.submodule { options = {
         id = lib.mkOption {
@@ -5802,6 +5814,10 @@ in
       };
       injectNumCtxForOpenAICompat = lib.mkOption {
         type = t.nullOr (t.bool);
+        default = null;
+      };
+      maxTokens = lib.mkOption {
+        type = t.nullOr (t.number);
         default = null;
       };
       models = lib.mkOption {
@@ -6572,6 +6588,10 @@ in
           default = null;
         };
       }; });
+        default = null;
+      };
+      timeoutSeconds = lib.mkOption {
+        type = t.nullOr (t.int);
         default = null;
       };
     }; }));
