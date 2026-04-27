@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 409e76281020dca6265becdebe7dbd4727dcf637. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 769994eb04fc367c962e6ec36b496ac328666ab9. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -730,16 +730,6 @@ in
       }; }) ]);
         default = null;
       };
-      llm = lib.mkOption {
-        type = t.nullOr (t.submodule { options = {
-        idleTimeoutSeconds = lib.mkOption {
-          type = t.nullOr (t.int);
-          default = null;
-          description = "Idle timeout for LLM streaming responses in seconds. If no token is received within this time, the request is aborted. Set to 0 to disable. Default: 120 seconds.";
-        };
-      }; });
-        default = null;
-      };
       maxConcurrent = lib.mkOption {
         type = t.nullOr (t.int);
         default = null;
@@ -780,6 +770,10 @@ in
         }; });
           default = null;
         };
+        documentInputType = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         enabled = lib.mkOption {
           type = t.nullOr (t.bool);
           default = null;
@@ -798,6 +792,10 @@ in
           default = null;
         };
         fallback = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        inputType = lib.mkOption {
           type = t.nullOr (t.str);
           default = null;
         };
@@ -926,6 +924,10 @@ in
             default = null;
           };
         }; });
+          default = null;
+        };
+        queryInputType = lib.mkOption {
+          type = t.nullOr (t.str);
           default = null;
         };
         remote = lib.mkOption {
@@ -1959,6 +1961,10 @@ in
         }; });
           default = null;
         };
+        documentInputType = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
         enabled = lib.mkOption {
           type = t.nullOr (t.bool);
           default = null;
@@ -1977,6 +1983,10 @@ in
           default = null;
         };
         fallback = lib.mkOption {
+          type = t.nullOr (t.str);
+          default = null;
+        };
+        inputType = lib.mkOption {
           type = t.nullOr (t.str);
           default = null;
         };
@@ -2105,6 +2115,10 @@ in
             default = null;
           };
         }; });
+          default = null;
+        };
+        queryInputType = lib.mkOption {
+          type = t.nullOr (t.str);
           default = null;
         };
         remote = lib.mkOption {
