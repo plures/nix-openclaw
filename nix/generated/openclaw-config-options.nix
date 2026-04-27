@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev 9b2f10dcf8d543184fcdb6ede356f675515c82b6. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 770978b8d3422b148aabbdfa35cb3ed7861026c3. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -5858,6 +5858,10 @@ in
             type = t.nullOr (t.bool);
             default = null;
           };
+          reasoningEffortMap = lib.mkOption {
+            type = t.nullOr (t.attrsOf (t.str));
+            default = null;
+          };
           requiresAssistantAfterToolResult = lib.mkOption {
             type = t.nullOr (t.bool);
             default = null;
@@ -5880,6 +5884,10 @@ in
           };
           requiresToolResultName = lib.mkOption {
             type = t.nullOr (t.bool);
+            default = null;
+          };
+          supportedReasoningEfforts = lib.mkOption {
+            type = t.nullOr (t.listOf (t.str));
             default = null;
           };
           supportsDeveloperRole = lib.mkOption {
