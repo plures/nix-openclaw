@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev dfaa06fe159b111c0544c33b910a991dc98e1e41. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev 6559288d4acd6c4b80c8da127846ec099b13af83. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -1309,6 +1309,10 @@ in
             type = t.nullOr (t.listOf (t.str));
             default = null;
           };
+          gpus = lib.mkOption {
+            type = t.nullOr (t.str);
+            default = null;
+          };
           image = lib.mkOption {
             type = t.nullOr (t.str);
             default = null;
@@ -2470,6 +2474,10 @@ in
           };
           extraHosts = lib.mkOption {
             type = t.nullOr (t.listOf (t.str));
+            default = null;
+          };
+          gpus = lib.mkOption {
+            type = t.nullOr (t.str);
             default = null;
           };
           image = lib.mkOption {
@@ -5759,6 +5767,15 @@ in
     type = t.nullOr (t.submodule { options = {
     mode = lib.mkOption {
       type = t.nullOr (t.oneOf [ (t.enum [ "merge" ]) (t.enum [ "replace" ]) ]);
+      default = null;
+    };
+    pricing = lib.mkOption {
+      type = t.nullOr (t.submodule { options = {
+      enabled = lib.mkOption {
+        type = t.nullOr (t.bool);
+        default = null;
+      };
+    }; });
       default = null;
     };
     providers = lib.mkOption {
