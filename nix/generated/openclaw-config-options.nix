@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev f7d139dfef960edec5c7efc6feeb9be602bff448. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev dfaa06fe159b111c0544c33b910a991dc98e1e41. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -1813,6 +1813,10 @@ in
         };
         mentionPatterns = lib.mkOption {
           type = t.nullOr (t.listOf (t.str));
+          default = null;
+        };
+        visibleReplies = lib.mkOption {
+          type = t.nullOr (t.enum [ "automatic" "message_tool" ]);
           default = null;
         };
       }; });
@@ -5342,6 +5346,10 @@ in
         type = t.nullOr (t.listOf (t.str));
         default = null;
       };
+      visibleReplies = lib.mkOption {
+        type = t.nullOr (t.enum [ "automatic" "message_tool" ]);
+        default = null;
+      };
     }; });
       default = null;
     };
@@ -6735,6 +6743,20 @@ in
         default = null;
       };
     }; });
+      default = null;
+    };
+  }; });
+    default = null;
+  };
+
+  proxy = lib.mkOption {
+    type = t.nullOr (t.submodule { options = {
+    enabled = lib.mkOption {
+      type = t.nullOr (t.bool);
+      default = null;
+    };
+    proxyUrl = lib.mkOption {
+      type = t.nullOr (t.str);
       default = null;
     };
   }; });
