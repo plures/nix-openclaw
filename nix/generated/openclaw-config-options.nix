@@ -1,4 +1,4 @@
-# Generated from upstream OpenClaw schema at rev a5cb171d73eae9ceae3617279771621f64cd956e. DO NOT EDIT.
+# Generated from upstream OpenClaw schema at rev a3519e362ff1a370f24290a0318f39e8da892d64. DO NOT EDIT.
 # Generator: nix/scripts/generate-config-options.ts
 { lib }:
 let
@@ -658,6 +658,10 @@ in
         };
         session = lib.mkOption {
           type = t.nullOr (t.str);
+          default = null;
+        };
+        skipWhenBusy = lib.mkOption {
+          type = t.nullOr (t.bool);
           default = null;
         };
         suppressToolErrorWarnings = lib.mkOption {
@@ -1887,6 +1891,10 @@ in
         };
         session = lib.mkOption {
           type = t.nullOr (t.str);
+          default = null;
+        };
+        skipWhenBusy = lib.mkOption {
+          type = t.nullOr (t.bool);
           default = null;
         };
         suppressToolErrorWarnings = lib.mkOption {
